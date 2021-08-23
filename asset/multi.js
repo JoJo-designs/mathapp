@@ -1,7 +1,6 @@
 const startBtn = document.querySelector("#startBtn");
 const questionBox = document.querySelector("#questionBox");
 const question = document.querySelector("#question");
-var userAnswer = document.getElementById("userAnswer");
 const submit = document.querySelector("#submit");
 
 let answer;
@@ -42,12 +41,21 @@ submit.addEventListener("click", function () {
 function checkAnswer(userAnswer) {
  console.log(userAnswer)
  console.log(answer)
- if ( userAnswer === answer) {
+ if (userAnswer === answer) {
      console.log("correct")
      correct = correct + 1;
      console.log(correct);
+     display()
  } else {
      console.log("incorrect")
+     incorrect = incorrect + 1
+     console.log(incorrect)
+     display()
  }
 }
 
+function display() {
+    let score = document.getElementById("score");
+    score.textContent = `Correct ${correct}  Incorrect ${incorrect}`
+
+}
