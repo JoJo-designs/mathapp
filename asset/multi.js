@@ -4,17 +4,20 @@ const question = document.querySelector("#question");
 const submit = document.querySelector("#submit");
 const end = document.getElementById("end");
 
+
 let answer;
 let correct = 0;
 let incorrect = 0;
+let value;
+let questions;
 
 //  LIST OF WHAT I NEED TO BUILD TO MAKE THIS WORK
 //  - hide question box before the start button is clicked DONE
 //  - hide start Button when the quiz start DONE
 //  - random generates two numbers and displays them as a question DONE
-//  - takes user input and checks it against the correct answer.
-//  - add to the correct and incorrect score depending on the answer 
-//  - tells user the correct answer if wrong 
+//  - takes user input and checks it against the correct answer.DONE
+//  - add to the correct and incorrect score depending on the answer  DONE
+//  - tells user the correct answer if wrong  
 //  - allows a user to continue to another question or quit.
 
 
@@ -31,6 +34,7 @@ function getRandom() {
     let valueOne = Math.floor(Math.random() * 13)
     let valueTwo = Math.floor(Math.random() * 13)
     answer = valueOne*valueTwo
+    value = `${valueOne} x ${valueTwo}`
     question.textContent = `${valueOne} x ${valueTwo} = ?`
 }
 
@@ -43,33 +47,36 @@ submit.addEventListener("click", function () {
 
 // listens for the user to end
 end.addEventListener("click", function () {
-    console.log("ending")
     $(startBtn).removeClass("notVisiable");
     questionBox.classList.add("notVisiable")
 });
 
 // checks user answer against the correct answer
 function checkAnswer(userAnswer) {
- console.log(userAnswer)
- console.log(answer)
  if (userAnswer === answer) {
-     console.log("correct")
      correct = correct + 1;
-     console.log(correct);
+     questions = `${value} = ${answer} Correct`
      display()
  } else {
-     console.log("incorrect")
      incorrect = incorrect + 1
-     console.log(incorrect)
+     questions = `${value} = ${userAnswer} Incorrect. the right answer is ${answer}`
      display()
  }
 }
 
 // change the displayed score and calls to get new numbers 
 function display() {
-    let score = document.getElementById("score");
+    let score = document.getElementById("score"); 
+    const questionsBox = document.querySelector("#questionsBox")
     score.textContent = `Correct ${correct}  Incorrect ${incorrect}`
     document.getElementById("userAnswer").value = ''
+
+        let addQuestions = document.createElement("div")
+        addQuestions.textContent = questions
+        addQuestions.classList.add("questionBlocks")
+        questionsBox.appendChild(addQuestions)
+    
+
     getRandom();
 }
 
