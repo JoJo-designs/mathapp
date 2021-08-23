@@ -2,6 +2,7 @@ const startBtn = document.querySelector("#startBtn");
 const questionBox = document.querySelector("#questionBox");
 const question = document.querySelector("#question");
 const submit = document.querySelector("#submit");
+const end = document.getElementById("end");
 
 let answer;
 let correct = 0;
@@ -25,6 +26,7 @@ startBtn.addEventListener("click", function () {
     getRandom()
 });
 
+// Gets random numbers and checks value
 function getRandom() {
     let valueOne = Math.floor(Math.random() * 13)
     let valueTwo = Math.floor(Math.random() * 13)
@@ -32,12 +34,21 @@ function getRandom() {
     question.textContent = `${valueOne} x ${valueTwo} = ?`
 }
 
+// Listens for user answer
 submit.addEventListener("click", function () {
     var userResponse = document.getElementById("userAnswer")
     const userAnswer = parseInt(userResponse.value)
     checkAnswer(userAnswer)
 });
 
+// listens for the user to end
+end.addEventListener("click", function () {
+    console.log("ending")
+    $(startBtn).removeClass("notVisiable");
+    questionBox.classList.add("notVisiable")
+});
+
+// checks user answer against the correct answer
 function checkAnswer(userAnswer) {
  console.log(userAnswer)
  console.log(answer)
@@ -54,8 +65,11 @@ function checkAnswer(userAnswer) {
  }
 }
 
+// change the displayed score and calls to get new numbers 
 function display() {
     let score = document.getElementById("score");
     score.textContent = `Correct ${correct}  Incorrect ${incorrect}`
-
+    document.getElementById("userAnswer").value = ''
+    getRandom();
 }
+
