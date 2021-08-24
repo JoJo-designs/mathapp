@@ -1,6 +1,8 @@
+
 const startBtn = document.querySelector("#startBtn");
 const questionBox = document.querySelector("#questionBox");
 const question = document.querySelector("#question");
+const questionsBox = document.querySelector("#questionsBox")
 const submit = document.querySelector("#submit");
 const end = document.getElementById("end");
 
@@ -48,7 +50,8 @@ submit.addEventListener("click", function () {
 // listens for the user to end
 end.addEventListener("click", function () {
     $(startBtn).removeClass("notVisiable");
-    questionBox.classList.add("notVisiable")
+    questionBox.classList.add("notVisiable");
+    saveScores()
 });
 
 // checks user answer against the correct answer
@@ -67,7 +70,6 @@ function checkAnswer(userAnswer) {
 // change the displayed score and calls to get new numbers 
 function display() {
     let score = document.getElementById("score"); 
-    const questionsBox = document.querySelector("#questionsBox")
     score.textContent = `Correct ${correct}  Incorrect ${incorrect}`
     document.getElementById("userAnswer").value = ''
 
@@ -75,8 +77,15 @@ function display() {
         addQuestions.textContent = questions
         addQuestions.classList.add("questionBlocks")
         questionsBox.appendChild(addQuestions)
-    
 
     getRandom();
 }
 
+// saves the scores to local storage
+function saveScores() {
+    let score = `${correct} Correct ${incorrect}` 
+    saveRecords(score)
+    correct = 0 
+    incorrect = 0 
+    questionsBox.parentNode.removeChild(questionsBox)
+}
